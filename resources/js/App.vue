@@ -12,15 +12,39 @@
                         <v-icon>mdi-home</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>Dashboard</v-list-item-title>
+                        <v-list-item-title>Главная</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item to="/notes">
                     <v-list-item-action>
-                        <v-icon>mdi-email</v-icon>
+                        <v-icon>mdi-notebook-outline</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>Notes</v-list-item-title>
+                        <v-list-item-title>Заметки</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item link>
+                    <v-list-item-action>
+                        <v-icon>mdi-currency-usd</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Финансы</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item link>
+                    <v-list-item-action>
+                        <v-icon>mdi-clipboard-text-outline</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Задачи</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item link>
+                    <v-list-item-action>
+                        <v-icon>mdi-database</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Инвентаризация</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>

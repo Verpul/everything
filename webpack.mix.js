@@ -13,5 +13,5 @@ require('vuetifyjs-mix-extension');
  */
 
 mix.js('resources/js/app.js', 'public/js').vuetify('vuetify-loader');
-mix.browserSync('vuetify.template.ru');
+mix.browserSync('everything.local');
 // .sass('resources/sass/app.scss', 'public/css');

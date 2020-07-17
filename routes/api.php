@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/notes/categories/unique', 'NoteCategorieController@checkCatalogTitleUnique');
+Route::apiResource('notes/categories', 'NoteCategorieController');

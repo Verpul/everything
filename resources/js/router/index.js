@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Dashboard from "../components/Dashboard.vue";
-import Notes from "../components/Notes.vue";
+import Notes from "../components/notes/NoteCategories.vue";
 
 Vue.use(VueRouter);
 

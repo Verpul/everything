@@ -6,6 +6,7 @@ import router from './router';
 import store from './store';
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios = axios;
 
 new Vue({
     store,

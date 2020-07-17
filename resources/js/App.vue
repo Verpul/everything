@@ -69,7 +69,7 @@
 export default {
     data: () => ({
         drawer: null,
-        miniVariant: false
+        miniVariant: true
     })
 };
 </script>

@@ -71,16 +71,4 @@ class NoteCategorieController extends Controller
 
       $data->delete();
     }
-
-    public function checkCatalogTitleUnique(Request $request){
-      $validator = Validator::make($request->all(), [
-        'title' => 'unique:note_categories,title',
-      ]);
-
-      if ($validator->fails()) {
-          return 'false';
-      }
-
-      return 'true';
-    }
 }

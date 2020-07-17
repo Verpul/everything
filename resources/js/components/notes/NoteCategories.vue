@@ -25,7 +25,6 @@
           <v-text-field
             v-model.trim="newCategoryName"
             :error-messages="categoryTitleErrors"
-            @input="$v.newCategoryName.$touch()"
             label="Имя категории"
             dense
             ref="categoryInput"
@@ -75,6 +74,8 @@ export default {
     // Save new or edited category
     saveNotesCategory() {
       // Validation errors check
+      this.$v.touch();
+
       if (this.$v.$anyError) {
         return;
       }
@@ -130,7 +131,6 @@ export default {
         errors.push("Имя категории должно быть не длиннее 50 символов");
       !this.$v.newCategoryName.required &&
         errors.push("Необходимо заполнить имя категории");
-      !this.uniqueCategoryName && errors.push("Такая категория уже существует");
       return errors;
     }
   },
@@ -139,15 +139,6 @@ export default {
     newCategoryName: {
       required,
       maxLength: maxLength(50),
-      isUnique(value) {
-        if (value === "" || value.length > 50) return true;
-        axios
-          .get("/api/notes/categories/unique", { params: { title: value } })
-          .then(response => {
-            console.log(response.data);
-            this.uniqueCategoryName = response.data;
-          });
-      }
     }
   }
 };

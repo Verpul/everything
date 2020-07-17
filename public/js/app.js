@@ -2059,7 +2059,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2076,6 +2075,8 @@ __webpack_require__.r(__webpack_exports__);
     // Save new or edited category
     saveNotesCategory: function saveNotesCategory() {
       // Validation errors check
+      this.$v.touch();
+
       if (this.$v.$anyError) {
         return;
       }
@@ -2128,7 +2129,6 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.$v.newCategoryName.$dirty) return errors;
       !this.$v.newCategoryName.maxLength && errors.push("Имя категории должно быть не длиннее 50 символов");
       !this.$v.newCategoryName.required && errors.push("Необходимо заполнить имя категории");
-      !this.uniqueCategoryName && errors.push("Такая категория уже существует");
       return errors;
     }
   },
@@ -2136,20 +2136,7 @@ __webpack_require__.r(__webpack_exports__);
   validations: {
     newCategoryName: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
-      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(50),
-      isUnique: function isUnique(value) {
-        var _this2 = this;
-
-        if (value === "" || value.length > 50) return true;
-        axios.get("/api/notes/categories/unique", {
-          params: {
-            title: value
-          }
-        }).then(function (response) {
-          console.log(response.data);
-          _this2.uniqueCategoryName = response.data;
-        });
-      }
+      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(50)
     }
   }
 });
@@ -5347,11 +5334,6 @@ var render = function() {
                           "error-messages": _vm.categoryTitleErrors,
                           label: "Имя категории",
                           dense: ""
-                        },
-                        on: {
-                          input: function($event) {
-                            return _vm.$v.newCategoryName.$touch()
-                          }
                         },
                         model: {
                           value: _vm.newCategoryName,

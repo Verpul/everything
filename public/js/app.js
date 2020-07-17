@@ -2075,7 +2075,7 @@ __webpack_require__.r(__webpack_exports__);
     // Save new or edited category
     saveNotesCategory: function saveNotesCategory() {
       // Validation errors check
-      this.$v.touch();
+      this.$v.$touch();
 
       if (this.$v.$anyError) {
         return;

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Note_categorie extends Model
+class Note_category extends Model
 {
   protected $fillable = ['title'];
 

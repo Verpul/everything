@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Note_categorie;
+use App\Note_category;
+use App\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class NoteCategorieController extends Controller
+class NoteCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class NoteCategorieController extends Controller
      */
     public function index()
     {
-        $data = Note_categorie::all();
+        $data = Note_category::all();
         return $data;
     }
 
@@ -27,7 +28,7 @@ class NoteCategorieController extends Controller
      */
     public function store(Request $request)
     {
-      Note_categorie::create([
+      Note_category::create([
         'title' => $request['categorieTitle'],
       ]);
     }
@@ -35,12 +36,14 @@ class NoteCategorieController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Note_categorie  $note_categorie
+     * @param  \App\Note_category  $note_categorie
      * @return \Illuminate\Http\Response
      */
-    public function show(Note_categorie $note_categorie)
+    public function show($id)
     {
+      $data = Note::where('note_category_id', $id)->get();
 
+      return $data;
     }
 
     /**
@@ -52,7 +55,7 @@ class NoteCategorieController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $data = Note_categorie::findOrFail($id);
+      $data = Note_category::findOrFail($id);
 
       $data->update([
         'title' => $request['categorieTitle']
@@ -62,12 +65,12 @@ class NoteCategorieController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Note_categorie  $note_categorie
+     * @param  \App\Note_category  $note_categorie
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-      $data = Note_categorie::findOrFail($id);
+      $data = Note_category::findOrFail($id);
 
       $data->delete();
     }

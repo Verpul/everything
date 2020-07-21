@@ -14,7 +14,7 @@ class NoteController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -25,7 +25,11 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Note::create([
+            'title' => $request['title'],
+            'text' => $request['text'],
+            'note_category_id' => $request['categoryId']
+          ]);
     }
 
     /**
@@ -46,9 +50,14 @@ class NoteController extends Controller
      * @param  \App\Note  $note
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Note $note)
+    public function update(Request $request, $id)
     {
-        //
+        $data = Note::findOrFail($id);
+
+        $data->update([
+            'title' => $request['title'],
+            'text' => $request['text']
+        ]);
     }
 
     /**
@@ -57,8 +66,10 @@ class NoteController extends Controller
      * @param  \App\Note  $note
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Note $note)
+    public function destroy($id)
     {
-        //
+        $data = Note::findOrFail($id);
+
+        $data->delete();
     }
 }

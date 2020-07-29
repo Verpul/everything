@@ -23,7 +23,7 @@ class SignInController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        if(!$token = auth()->setTTL(1)->attempt($validator->validated())){
+        if(!$token = auth()->attempt($validator->validated())){
             return response(null, 401);
         }
 
@@ -41,7 +41,7 @@ class SignInController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            // 'expires_in' => auth()->factory()->getTTL() * 60,
+            'expires_in' => auth()->factory()->getTTL() * 60,
         ]);
     }
 }

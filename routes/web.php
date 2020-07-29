@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-Auth::routes();
+// Auth::routes();
 
 Route::fallback(function () {
     return view('index');

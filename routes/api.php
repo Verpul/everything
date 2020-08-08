@@ -22,3 +22,5 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function() {
 
 Route::apiResource('notes/categories', 'NoteCategoryController');
 Route::apiResource('notes', 'NoteController');
+
+Route::apiResource('inventory/categories', 'InventoryCategoryController');

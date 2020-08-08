@@ -40,7 +40,7 @@
             <v-list-item-title>Задачи</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item to="/inventory">
           <v-list-item-action>
             <v-icon>mdi-database</v-icon>
           </v-list-item-action>

@@ -87,7 +87,6 @@ export default {
     newCategoryName: "",
     editMode: false,
     categoryId: null,
-    uniqueCategoryName: true,
     showNotes: false
   }),
   methods: {
@@ -131,7 +130,6 @@ export default {
       this.newCategoryName = "";
       this.editMode = false;
       this.categoryId = null;
-      this.uniqueCategoryName = true;
       this.$v.$reset();
     },
     loadCategoryNotes(categoryId) {

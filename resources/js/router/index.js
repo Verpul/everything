@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Dashboard from "../components/Dashboard.vue";
 import Notes from "../components/notes/NoteCategories.vue";
 import SignIn from "../components/auth/SignIn.vue";
+import Inventory from "../components/inventory/InvCategories.vue";
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -22,6 +23,11 @@ const routes = [
     path: "/signin",
     name: "SignIn",
     component: SignIn
+  },
+  {
+    path: "/inventory",
+    name: "Inventory",
+    component: Inventory
   },
   {
     path: "*",

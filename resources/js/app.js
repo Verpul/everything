@@ -5,6 +5,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+window._ = require('lodash');
 require('./plugins/axios');
 
 Vue.use(Vuelidate);

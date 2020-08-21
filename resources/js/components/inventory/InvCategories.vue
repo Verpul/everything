@@ -32,14 +32,6 @@
                   dense
                   ref="categoryInput"
                 ></v-text-field>
-                <!-- Save category button -->
-                <!-- <v-btn icon small color="primary" @click="saveNotesCategory()"
-                  ><v-icon>mdi-check-circle-outline</v-icon></v-btn
-                > -->
-                <!-- Discard category changes button -->
-                <!-- <v-btn icon small color="red" @click="clearCategoryData()"
-                  ><v-icon>mdi-cancel</v-icon></v-btn
-                > -->
               </v-list-item>
               <v-subheader>
                 <v-row
@@ -86,7 +78,11 @@
                       dense
                       :items="types"
                       v-model="field.type.$model"
-                      :error-messages="field.type.$dirty && !field.type.required ? 'Необходимо заполнить тип' : ''"
+                      :error-messages="
+                        field.type.$dirty && !field.type.required
+                          ? 'Необходимо заполнить тип'
+                          : ''
+                      "
                     ></v-select>
                   </v-col>
                   <v-col align="right" class="pl-0">
@@ -127,7 +123,7 @@
               <v-list-item
                 v-for="category in getInventoryCategories"
                 :key="category.id"
-                @click="loadCategoryNotes(category.id)"
+                @click="loadCategoryItems(category.id)"
               >
                 <v-list-item-content>
                   <v-list-item-title
@@ -156,14 +152,16 @@
         </v-list>
       </v-card>
     </v-col>
-    <v-col cols="10">
-      <!-- <app-notes v-if="showNotes"></app-notes> -->
+    <v-col>
+      <app-inv-items v-if="showItems"></app-inv-items>
     </v-col>
   </v-row>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 import { required, maxLength } from "vuelidate/lib/validators";
+import InvItems from "./InvItems.vue";
 
 export default {
   data: () => ({
@@ -173,12 +171,17 @@ export default {
     types: ["String", "Date", "Number", "Text"],
 
     editMode: false,
-    categoryId: null,
-    showNotes: false
+    // categoryId: null,
+    showItems: false
   }),
   methods: {
+    ...mapMutations([
+      'setCurrentCategoryId',
+      'setItemFormMode'
+    ]),
     // Show add new category form
     addCategoryMode() {
+      this.showItems = false;
       this.addMode = true;
       this.addNewOption();
     },
@@ -206,8 +209,8 @@ export default {
 
       this.$store.dispatch(action, {
         categoryTitle: this.newCategoryName,
-        fields: this.fields,
-        categoryId: this.categoryId
+        fields: this.fields
+        // categoryId: this.categoryId
       });
 
       this.clearCategoryData();
@@ -215,16 +218,20 @@ export default {
     // Prepare category for edit
     editNoteCategory(category) {
       this.editMode = true;
-      this.categoryId = category.id;
+      this.setCurrentCategoryId(category.id);
+      // this.categoryId = category.id;
+      this.showItems = false;
       this.addMode = true;
-      this.fields = this.$store.getters.inventoryCategoryFields(category.id);
+      this.fields = this.$store.getters.inventoryCategoryFields;
       setTimeout(() => {
         this.newCategoryName = category.title;
         this.$refs.categoryInput.focus();
       }, 0);
     },
     deleteInvCategory(categoryId) {
-      this.$store.dispatch("deleteInvCategory", categoryId);
+      this.showItems = false;
+      this.setCurrentCategoryId(categoryId);
+      this.$store.dispatch("deleteInvCategory");
       this.clearCategoryData();
     },
     // clear category create/edit data
@@ -234,30 +241,15 @@ export default {
       this.$v.$reset();
       this.fields = [];
       this.editMode = false;
-      this.categoryId = null;  
+      this.setCurrentCategoryId(null);
+      // this.categoryId = null;
     },
-    loadCategoryNotes(categoryId) {
-      this.$store.dispatch("loadCateryNotes", categoryId);
-      this.showNotes = true;
+    loadCategoryItems(categoryId) {
+      this.setCurrentCategoryId(categoryId);
+      this.$store.dispatch("getCategoryItems");
+      this.$store.commit('setCurrentItemId', null);
+      this.showItems = true;
     }
-    // fieldTtitleErrors(index) {
-    //   const errors = [];
-    //   if (!this.$v.fields.$each.$iter[index].$dirty) return errors;
-    //   !this.$v.fields.$each.$iter[index].title.maxLength &&
-    //     errors.push(
-    //       "Имя дополнительного поля должно быть не длиннее 50 символов"
-    //     );
-    //   !this.$v.fields.$each.$iter[index].title.required &&
-    //     errors.push("Необходимо заполнить имя дополнительного поля");
-    //   return errors;
-    // },
-    // fieldTypeErrors(index) {
-    //   const errors = [];
-    //   if (!this.$v.fields.$each.$iter[index].$dirty) return errors;
-    //   !this.$v.fields.$each.$iter[index].type.required &&
-    //     errors.push("Необходимо заполнить тип");
-    //   return errors;
-    // }
   },
   created() {
     // Load all categories
@@ -268,13 +260,6 @@ export default {
     getInventoryCategories() {
       return this.$store.getters.inventoryCategories;
     },
-    // Get category fields
-    // getInvCategoryFields() {
-    //   this.fields = this.editMode
-    //     ? this.$store.getters.inventoryCategoryFields(this.categoryId)
-    //     : this.fields;
-    //   return this.fields;
-    // },
     categoryTitleErrors() {
       const errors = [];
       if (!this.$v.newCategoryName.$dirty) return errors;
@@ -291,6 +276,9 @@ export default {
         errors.push("Необходимо добавить как минимум одно дополнительное поле");
       return errors;
     }
+  },
+  components: {
+    "app-inv-items": InvItems
   },
   validations: {
     newCategoryName: {

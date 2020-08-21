@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Inventory_category;
+use App\Inventory_item;
 use Illuminate\Http\Request;
 
 class InventoryCategoryController extends Controller
@@ -43,9 +44,11 @@ class InventoryCategoryController extends Controller
      * @param  \App\Inventory_category  $inventory_category
      * @return \Illuminate\Http\Response
      */
-    public function show(Inventory_category $inventory_category)
+    public function show($id)
     {
-        //
+        $items = Inventory_item::where('inventory_category_id', $id)->get();
+
+        return $items;
     }
 
     /**

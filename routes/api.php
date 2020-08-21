@@ -24,3 +24,4 @@ Route::apiResource('notes/categories', 'NoteCategoryController');
 Route::apiResource('notes', 'NoteController');
 
 Route::apiResource('inventory/categories', 'InventoryCategoryController');
+Route::apiResource('inventory/items', 'InventoryItemController');
